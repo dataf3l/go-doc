@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"strings"
+    "strconv"
 	"os"
 )
 
@@ -17,7 +18,7 @@ func check(e error) {
 
 // ParseFolder parses files
 // more comments here
-func ParseFolder(i_folder string, o_folder string, depth int) {
+func ParseFolder(i_folder string, o_folder string, depth int, list *string) {
     if (depth == 0) {
         return
     }
@@ -31,8 +32,8 @@ func ParseFolder(i_folder string, o_folder string, depth int) {
 	if err != nil {
 		log.Fatal(err)
 	}
+    *list += "<font size="+strconv.Itoa(4)+" color=black>" + o_folder + "</font><br>"
     for _, f := range files {
-        fmt.Println(f.Name())
             if strings.HasSuffix(f.Name(), ".go") {
 htmlHeader := "<!DOCTYPE html>\n<html><head><title> go-doc Documentation</title>"
                 htmlHeader += "<style> "
@@ -57,6 +58,7 @@ htmlHeader := "<!DOCTYPE html>\n<html><head><title> go-doc Documentation</title>
                 fmt.Println(i_folder+"/"+f.Name()+".html")
                 err := ioutil.WriteFile(o_folder+"/"+f.Name()+".html", d1, 0644)
                 check(err)
+                *list += "<a href="+o_folder+"/"+f.Name()+".html>"+f.Name()+"</a><br>"
             } else {
                 sub_path := "/" + f.Name()
                 i_folder_sub := i_folder + sub_path
@@ -64,7 +66,7 @@ htmlHeader := "<!DOCTYPE html>\n<html><head><title> go-doc Documentation</title>
                 fi, err := os.Stat(i_folder_sub);
                 check(err)
                 if fi.Mode().IsDir() {
-                    ParseFolder(i_folder_sub, o_folder_sub ,depth-1);
+                    ParseFolder(i_folder_sub, o_folder_sub ,depth-1, list);
                 }
             }
     }

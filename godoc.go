@@ -1,29 +1,18 @@
 package main
 
 import (
-	"io/ioutil"
-	//	"bufio"
 	"fmt"
-	//	"io"
 	"os"
+    "strconv"
 )
-
-func check(e error) {
-	if e != nil {
-		fmt.Println(e)
-		panic(e)
-	}
-}
 
 // comment
 // another comment
 func main() {
 	input := os.Args[1]
 	output := os.Args[2]
+	depth, _ := strconv.Atoi(os.Args[3])
 
-	out := ParseFolder(input)
-	d1 := []byte(out)
-	err := ioutil.WriteFile(output+"/go-doc.index.html", d1, 0644)
-	check(err)
-	fmt.Println("Documenting: " + input + " into folder: " + output)
+	ParseFolder(input, output, int(depth))
+    fmt.Println("Documenting: " + input + " into folder: " + output)
 }

@@ -83,13 +83,13 @@ func ParseFile(fileName string) string {
 			foutput += "</div>\n"
 			previousComments = ""
 			// if name is exported, we document it, othwerise, it is subject to change.
-			if fname[0] >= 'A' && fname[0] <= 'Z' {
+		//	if fname[0] >= 'A' && fname[0] <= 'Z' {
 				output += foutput
 				funcIndex += "<li><a href=\"#" + string(fname) + "\">" + string(fname) + "</a></li>"
 				fmt.Println("found method:" + string(fname))
-			} else {
-				fmt.Println("found undocumented method:" + string(fname))
-			}
+		//	} else {
+		//		fmt.Println("found undocumented method:" + string(fname))
+		//	}
 
 		}
 		if strings.HasPrefix(line, "import") {

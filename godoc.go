@@ -17,22 +17,21 @@ func main() {
     out := ""
 
     htmlHeader := "<!DOCTYPE html>\n<html><head><title> go-doc Documentation</title>"
-    htmlHeader += "<style> "
-    htmlHeader += "* { font-family:helvetica; }\n"
-    htmlHeader += ".blk {padding:10px; }\n"
-    htmlHeader += "h1,h2,h3 {color:darkblue;}  \n"
-    htmlHeader += "p {font-family:\"Courier New\",monospace;}  \n"
-    htmlHeader += "code { padding:10px; background-color:rgb(230,230,230); display:block; margin-bottom:10px; }\n"
-    //	htmlHeader += ". blk {padding:10px};\n"
-    //	htmlHeader += ". blk {padding:10px};\n"
-    htmlHeader += "<meta charset='UTF-8'>"
-    htmlHeader += "</style></head>"
+    htmlHeader += `<style> 
+    ul{
+        list-style:none;
+    padding: 5px 0px 5px 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #efefef;
+    font-size: 12px;
+    }
+           `
+
+
+    htmlHeader += "</style></head><body>"
     htmlFooter := "</body></html>"
-
     out += htmlHeader
-
 	ParseFolder(input, output, int(depth), &out)
-
     out += htmlFooter
     d1 := []byte(out)
     err := ioutil.WriteFile(output+"/index.html", d1, 0644)

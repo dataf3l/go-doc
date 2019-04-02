@@ -6,6 +6,7 @@ import (
 	"path"
 	"regexp"
 	"strings"
+    "strconv"
 )
 
 // todo avoud double highlight.
@@ -73,23 +74,24 @@ func ParseFile(fileName string) string {
 
 			mline := strings.Replace(line, "{", "", -1)
 			mline = highlight(mline)
-			foutput := ""
+			foutput := "" 
 			foutput += "<a name='" + string(fname) + "'></a><h2>" + string(fname) + "</h2>\n"
 			foutput += "<div class=blk>\n"
 			foutput += "<code>" + mline + "</code>\n"
 			foutput += "<p>\n"
 			foutput += previousComments
+			foutput += "<a href=https://github.com/NAKsir-melody/go-ethereum/tree/master/"+fileName[14:]+"#L" + strconv.Itoa(i)+">"+fileName[14:]+"#L" + strconv.Itoa(i)+"</a><br>"
 			foutput += "</p>\n"
 			foutput += "</div>\n"
 			previousComments = ""
 			// if name is exported, we document it, othwerise, it is subject to change.
-			if fname[0] >= 'A' && fname[0] <= 'Z' {
+		//	if fname[0] >= 'A' && fname[0] <= 'Z' {
 				output += foutput
 				funcIndex += "<li><a href=\"#" + string(fname) + "\">" + string(fname) + "</a></li>"
 				fmt.Println("found method:" + string(fname))
-			} else {
-				fmt.Println("found undocumented method:" + string(fname))
-			}
+		//	} else {
+		//		fmt.Println("found undocumented method:" + string(fname))
+		//	}
 
 		}
 		if strings.HasPrefix(line, "import") {
